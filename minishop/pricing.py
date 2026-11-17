@@ -27,7 +27,7 @@ FREE_SHIPPING_THRESHOLD = Decimal("50.00")
 BULK_QTY = 10
 BULK_RATE = Decimal("0.05")
 MAX_QTY = 99
-COUPONS = {"WELCOME10", "FIXED5", "FREESHIP"}
+COUPONS = {"WELCOME10", "FIXED5", "FREESHIP","STUDENT15"}
 
 
 def money(value: Decimal | float | int | str) -> Decimal:
@@ -93,6 +93,8 @@ def coupon_discount(subtotal: Decimal, coupon: str | None) -> Decimal:
         return money(subtotal * Decimal("0.10"))
     if code == "FIXED5" and subtotal >= Decimal("30"):
         return Decimal("5.00")
+    if code == "STUDENT15" and subtotal < BULK_QTY:
+        return money(subtotal * Decimal("0.15"))
     return Decimal("0.00")
 
 
